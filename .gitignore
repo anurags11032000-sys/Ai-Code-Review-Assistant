@@ -1,0 +1,18 @@
+# Java
+target/
+.m2/
+*.class
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.classpath
+.project
+.settings/
+.factorypath
+
+# Env/secrets
+.env
+frontend/.env

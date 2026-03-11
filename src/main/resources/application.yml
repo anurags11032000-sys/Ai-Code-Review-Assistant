@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: ai-code-review-assistant
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ai_code_review_db}
+    username: ${DB_USERNAME:ai_reviewer}
+    password: ${DB_PASSWORD:ai_reviewer_pwd}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY:}
+      base-url: ${SPRING_AI_OPENAI_BASE_URL:https://api.groq.com/openai}
+      chat:
+        options:
+          model: ${SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL:llama-3.1-8b-instant}
+          temperature: 0.2
+  jackson:
+    default-property-inclusion: non_null
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            scope: openid,profile,email
+
+server:
+  port: ${PORT:${SERVER_PORT:8080}}
+
+security:
+  api-key: ${INTERNAL_API_KEY:}
+
+integration:
+  github:
+    api-base-url: ${GITHUB_API_BASE_URL:https://api.github.com}
+
+frontend:
+  url: ${FRONTEND_URL:http://localhost:3000}
+  auth-success-url: ${FRONTEND_AUTH_SUCCESS_URL:http://localhost:5173}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+ai:
+  mock:
+    enabled: ${AI_MOCK_ENABLED:false}
