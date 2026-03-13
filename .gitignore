@@ -16,3 +16,4 @@ frontend/dist/
 # Env/secrets
 .env
 frontend/.env
+.DS_Store
