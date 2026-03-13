@@ -15,17 +15,25 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${frontend.urls:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000}")
     private String frontendUrls;
 
+    @Value("${frontend.origin-patterns:https://*.up.railway.app,http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000}")
+    private String frontendOriginPatterns;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         String[] origins = StringUtils.commaDelimitedListToStringArray(frontendUrls);
+        String[] originPatterns = StringUtils.commaDelimitedListToStringArray(frontendOriginPatterns);
         if (StringUtils.hasText(frontendUrl)) {
             String merged = frontendUrls + "," + frontendUrl;
             origins = StringUtils.commaDelimitedListToStringArray(merged);
+            String mergedPatterns = frontendOriginPatterns + "," + frontendUrl;
+            originPatterns = StringUtils.commaDelimitedListToStringArray(mergedPatterns);
         }
         registry.addMapping("/api/**")
                 .allowedOrigins(origins)
+                .allowedOriginPatterns(originPatterns)
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
+                .allowCredentials(true)
                 .exposedHeaders("*");
     }
 }

@@ -28,6 +28,9 @@ public class SecurityConfig {
     @Value("${frontend.urls:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000}")
     private String frontendUrls;
 
+    @Value("${frontend.origin-patterns:https://*.up.railway.app,http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000}")
+    private String frontendOriginPatterns;
+
     @Value("${frontend.auth-success-url:http://localhost:5173}")
     private String frontendAuthSuccessUrl;
 
@@ -53,12 +56,16 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         String[] origins = StringUtils.commaDelimitedListToStringArray(frontendUrls);
+        String[] originPatterns = StringUtils.commaDelimitedListToStringArray(frontendOriginPatterns);
         if (StringUtils.hasText(frontendUrl)) {
             String merged = frontendUrls + "," + frontendUrl;
             origins = StringUtils.commaDelimitedListToStringArray(merged);
+            String mergedPatterns = frontendOriginPatterns + "," + frontendUrl;
+            originPatterns = StringUtils.commaDelimitedListToStringArray(mergedPatterns);
         }
 
         configuration.setAllowedOrigins(Arrays.asList(origins));
+        configuration.setAllowedOriginPatterns(Arrays.asList(originPatterns));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("*"));
