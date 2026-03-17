@@ -48,7 +48,7 @@ integration:
 
 frontend:
   url: ${FRONTEND_URL:http://localhost:3000}
-  auth-success-url: ${FRONTEND_AUTH_SUCCESS_URL:http://localhost:5173}
+  auth-success-url: ${FRONTEND_AUTH_SUCCESS_URL:/}
 
 management:
   endpoints:

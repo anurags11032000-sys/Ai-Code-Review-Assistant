@@ -5,7 +5,7 @@ import ExplainCodeCard from './components/ExplainCodeCard'
 import ReviewsListCard from './components/ReviewsListCard'
 
 export default function App() {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || ''
   const googleLoginUrl = `${apiBaseUrl}/oauth2/authorization/google`
   const defaultFileName = import.meta.env.VITE_DEFAULT_FILE_NAME || ''
 
